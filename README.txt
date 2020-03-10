@@ -1,12 +1,17 @@
-BY: Evan Wheeler
-Student# 30046173
+A pair of python programs that use the python cryptography module to first encrypt a file, then brute-forces a password to read the file and (possibly) modifies the plain-text message before writing it to a file.
 
 FILES:
 -encryptFile.py
 	Usage: python3 encryptFile.py [plaintext-filename] [tampered-filename] [password]
 
-	Given a plaintext file and a password, the program will encrypt the file as specified
-in the question and store the calculated ciphertext in [tamperedFileName] as a binary file.
+	Given a plaintext file and a password, the program will encrypt the file as specified below and store the calculated ciphertext in [tamperedFileName] as a binary file.
+	-Converts the plaintext to byte array 'B'
+	-Computes a hash tag  't' on the plaintext by using SHA1 (I know it is depreciated, ann would not use it in a real-life implementation.
+	-Derives and encryption key by using SHA1 on the password and truncating for AES-128 (also could be 256 in a real implementation)
+	-Generates a 16-byte IV (for CBC mode)
+	-Padds  (B || t) using PKCS7 if necessary, and then encrypts the array with AES128 in CBC mode.
+	-The program then writes the IV, followed by the encryption to the specified file name.
+	
 
 
 -modifyFile
@@ -22,11 +27,6 @@ Finally the program writes the (possibly modified) plaintext to a file.
 ***The name of the file that the program writes the plaintext to is specified on line #20
 By default it will write to "palintext.txt" however this can be changed by modifying the string
 on line #20***
-
-The problem is solved in full with parts a, b, and c being contained in "modifyFile.py"
-and part d being done in "encryptFile.py"
-
-There are no known bugs to the program.
 
 If a cyphertext is supplied to modifyFile.py that does not
 contain "FOXHOUND" or is encrypted with a password that is not in the form
